@@ -307,11 +307,16 @@ export const useStore = create<AppState>()(
           const state = get()
           const queuedFiles = state.files.filter(f => f.status === 'queued')
           
-          if (queuedFiles.length === 0) return
+          if (queuedFiles.length === 0) {
+            console.log('No queued files to process')
+            return
+          }
+          
+          console.log('Starting conversion for', queuedFiles.length, 'files')
           
           // 初始化 WorkerPool
           if (!workerPool) {
-            workerPool = new WorkerPool('/src/workers/codecWorker.ts')
+            workerPool = new WorkerPool(new URL('../workers/codecWorker.ts', import.meta.url))
           }
           
           // 创建编码任务
@@ -370,6 +375,7 @@ export const useStore = create<AppState>()(
         },
 
         handleWorkerEvent: (event: any) => {
+          console.log('Worker event received:', event)
           const { type, fileId, progress, blob, outputMeta, error } = event
           
           if (type === 'progress') {
@@ -411,6 +417,7 @@ export const useStore = create<AppState>()(
             }
           } else if (type === 'error') {
             // 处理错误
+            console.error('Worker error for file', fileId, ':', error)
             get().updateFileStatus(fileId, 'error', error)
             
             // 检查是否所有任务都完成

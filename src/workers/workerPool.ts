@@ -9,7 +9,7 @@ export class WorkerPool {
   private listeners = new Map<string, (e: WorkerEvent) => void>() // 按 jobId 订阅
   private cancelled = new Set<string>()
 
-  constructor(workerUrl: string, size = CONCURRENCY) {
+  constructor(workerUrl: string | URL, size = CONCURRENCY) {
     for (let i = 0; i < size; i++) {
       const w = new Worker(workerUrl, { type: 'module' })
       w.onmessage = (evt: MessageEvent<WorkerEvent>) => {
