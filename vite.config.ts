@@ -5,12 +5,14 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   base: '/image-tool-v2/',
   plugins: [react()],
+  worker: {
+    format: 'es'
+  },
   build: {
     rollupOptions: {
       output: {
         manualChunks: {
-          'codec-worker': ['./src/workers/codecWorker.ts'],
-          'image-worker': ['./src/workers/imageWorker.ts']
+          'codec-worker': ['./src/workers/codecWorker.ts']
         }
       }
     }

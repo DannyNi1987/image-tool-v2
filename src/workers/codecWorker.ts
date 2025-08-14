@@ -10,13 +10,17 @@ self.onmessage = async (evt: MessageEvent<EncodeJob>) => {
   const job = evt.data
   let bitmap: ImageBitmap | null = null
   
+  console.log('Worker received job:', job.id, 'for file:', job.fileId)
+  
   try {
     const post = (ev: WorkerEvent) => (self as any).postMessage(ev)
     
     // 1) 解码
+    console.log('Starting decode...')
     post({ type: 'progress', id: job.id, fileId: job.fileId, stage: 'decode', progress: 0 })
     const { bitmap: decodedBitmap } = await decodeImage(job.arrayBuffer)
     bitmap = decodedBitmap
+    console.log('Decode completed, bitmap size:', bitmap.width, 'x', bitmap.height)
     
     // 2) Trim
     if (job.options.trim.enabled) {
@@ -41,8 +45,10 @@ self.onmessage = async (evt: MessageEvent<EncodeJob>) => {
     }
     
     // 6) Encode
+    console.log('Starting encode with format:', job.options.format.format)
     post({ type: 'progress', id: job.id, fileId: job.fileId, stage: 'encode', progress: 0.85 })
     const { blob, outputMeta } = await encodeImage(bitmap, job.options.format)
+    console.log('Encode completed, blob size:', blob.size)
     
     // 7) Finalize
     post({ type: 'progress', id: job.id, fileId: job.fileId, stage: 'finalize', progress: 1.0 })
