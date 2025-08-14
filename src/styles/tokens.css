@@ -1,0 +1,23 @@
+:root {
+  /* 主题 */
+  --bg-grad-start: #ECF3FF;
+  --bg-grad-end: #FFFFFF;
+  --bg-angle: 180deg;
+  --title-font: 'Alata', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  --text-font: 'Montserrat', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  --title-color: #1F2D40;
+  --text-color: #4A4A4A;
+  --container-max: 1300px;
+  
+  /* UI */
+  --panel-bg: #fff;
+  --panel-border: rgba(0, 0, 0, 0.06);
+  --panel-radius: 12px;
+  --panel-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  --muted: #6b7280;
+  --primary: #1F2D40;
+  --accent: #0866FF;
+  --focus: #2563eb40;
+  --danger: #ef4444;
+  --success: #16a34a;
+}

@@ -1,0 +1,41 @@
+@import './tokens.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background: linear-gradient(var(--bg-angle), var(--bg-grad-start) 0%, var(--bg-grad-end) 100%);
+  color: var(--text-color);
+  font-family: var(--text-font);
+}
+
+h1, h2, h3 {
+  font-family: var(--title-font);
+  color: var(--title-color);
+}
+
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* 可访问性：焦点可见 */
+:where(a, button, [role='button'], input, select, textarea):focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px var(--focus);
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
